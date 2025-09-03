@@ -279,3 +279,27 @@ until [ $count -gt 3 ]; do
 done
 
 
+
+
+
+hdd --add --next --scci --create new virtual disk -- memory set 10 gb -- stored 
+as a single file --next ---finish
+
+go to terminal --lsblk -- cheak list --init 0 --sudo mkfs ext4 /dev/sdb 
+----mkdir /tmp/deta  ----sudo mount /dev/sdb  /tmp/data
+df - Th  -----sudo umount /tmp/data
+
+
+
+
+
+
+
+sudo usermod -aG group_name username
+
+
+
+
+
+
+
