@@ -1,0 +1,281 @@
+List All Files in Current Directory (Including Hidden, Long Format)
+Command:
+
+bash
+ls -la
+Change Directory to /tmp, Create lab1 Directory, Move into It
+Commands:
+
+bash
+cd /tmp
+mkdir lab1
+cd lab1
+Print Current Username, UID, and GID
+Commands:
+
+bash
+whoami          # prints username
+id -u           # prints UID
+id -g           # prints GID
+Help Commands: Find ls and pwd Options
+To find ls options for sorting by modification time:
+
+bash
+man ls
+# Look for options like -t
+or
+
+bash
+ls --help | grep time
+To find pwd options for logical vs physical paths:
+
+bash
+pwd --help
+Look for options -L (logical) and -P (physical).
+
+Assignment 1.2
+1) Show All Processes Running for Current User
+bash
+ps -u $(whoami)
+2) Display Memory Usage in Megabytes
+bash
+free -m
+3) Show Calendar for the Year 2009
+bash
+cal -y 2009
+4) Display First 10 Lines and Last 5 Lines of /etc/passwd
+bash
+head -n 10 /etc/passwd
+tail -n 5 /etc/passwd
+5) Display Complete System Information (Kernel, Hardware, OS)
+bash
+uname -a               # Kernel version and hardware
+lsb_release -a         # OS name and version (on most distros)
+Assignment 1.3
+1) Create mydata.txt with Three Lines, View by cat, more, less
+bash
+echo -e "Line 1\nLine 2\nLine 3" > mydata.txt
+cat mydata.txt
+more mydata.txt
+less mydata.txt
+2) Copy mydata.txt to /tmp, Then Move to ~/backup Directory
+bash
+cp mydata.txt /tmp/
+mkdir -p ~/backup
+mv /tmp/mydata.txt ~/backup/
+3) Show Disk Usage in Human-Readable Format for /home and Backup Directory Size
+bash
+du -h /home --max-depth=1
+du -sh ~/backup
+4) Remove mydata.txt and Backup Directory
+bash
+rm mydata.txt
+rm -r ~/backup
+5) Display Current Hostname, Then Change Temporarily to lab-machine
+bash
+hostname
+sudo hostname lab-machine    # Requires root privileges
+hostname                     # Confirm change
+Assignment 1.4
+1) Create Alias ll for ls -l and Test It
+bash
+alias ll='ls -l'
+ll
+2) Switch to root User, Print Username, and Exit Back
+bash
+su -
+whoami       # After switching to root
+exit         # To return to your user
+3) Find All Files Named passwd Starting from Root
+bash
+sudo find / -name passwd 2>/dev/null
+4) Find All Files Larger than 100MB inside /var
+bash
+sudo find /var -type f -size +100M 2>/dev/null
+This completes the step-by-step commands for all requested tasks and assignments. Each step uses standard Linux/Unix commands typically available on most distributions.
+
+
+
+
+
+
+
+Check eligibility for driving (assuming age 18 as minimum):
+
+bash
+#!/bin/bash
+
+# Check if a person is eligible to drive (assuming legal age 18)
+read -p "Enter your age: " age
+if [[ $age -ge 18 ]]; then
+    echo "You are eligible for driving."
+else
+    echo "You are not eligible for driving."
+fi
+Check if a given year is a leap year:
+
+bash
+#!/bin/bash
+
+# Check if a given year is a leap year
+read -p "Enter the year: " year
+if [[ ( $((year % 400)) -eq 0 ) || ( $((year % 4)) -eq 0 && $((year % 100)) -ne 0 ) ]]; then
+    echo "$year is a leap year."
+else
+    echo "$year is not a leap year."
+fi
+List all files and directories whose size is greater than 4.0K:
+
+bash
+#!/bin/bash
+
+# List all files and directories whose size is greater than 4.0K
+find . -size +4k
+Script that accepts a directory path and filename as arguments, then checks if the file exists inside the given directory. If yes, display its size and last modified date; otherwise, show an error:
+
+bash
+#!/bin/bash
+
+# Accept two arguments: Directory path and filename
+if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 <directory_path> <filename>"
+    exit 1
+fi
+
+dir=$1
+file=$2
+
+if [[ -d "$dir" ]]; then
+    if [[ -e "$dir/$file" ]]; then
+        size=$(stat -c%s "$dir/$file")
+        last_modified=$(stat -c%y "$dir/$file")
+        echo "File exists. Size: $size bytes, Last modified: $last_modified"
+    else
+        echo "Error: File does not exist in the directory."
+    fi
+else
+    echo "Error: Directory does not exist."
+fi
+Each script is designed for typical Linux shell environments and can be saved as .sh files and run after setting execute permission with chmod +x filename.sh.
+
+
+
+
+
+
+
+
+Print numbers from 1 to 10 using a for loop:
+
+bash
+#!/bin/bash
+for i in {1..10}
+do
+  echo $i
+done
+Iterate over a list of filenames file1 file2 file3:
+
+bash
+#!/bin/bash
+for file in file1 file2 file3
+do
+  echo $file
+done
+Display all .txt files in the current directory using a for loop:
+
+bash
+#!/bin/bash
+for file in *.txt
+do
+  echo $file
+done
+Calculate the sum of numbers from 1 to 50 using a for loop:
+
+bash
+#!/bin/bash
+sum=0
+for (( i=1; i<=50; i++ ))
+do
+  sum=$((sum + i))
+done
+echo "Sum is $sum"
+While Loop Scripts and Examples
+Print numbers from 1 to 10 using a while loop:
+
+bash
+#!/bin/bash
+i=1
+while [ $i -le 10 ]
+do
+  echo $i
+  i=$(( i + 1 ))
+done
+Take input from the user and print on console until they type "exit":
+
+bash
+#!/bin/bash
+while true
+do
+  read -p "Enter input (type 'exit' to quit): " input
+  if [ "$input" == "exit" ]; then
+    break
+  fi
+  echo "You entered: $input"
+done
+Until Loop Scripts and Examples
+Print numbers from 1 to 5 using an until loop:
+
+bash
+#!/bin/bash
+i=1
+until [ $i -gt 5 ]
+do
+  echo $i
+  i=$(( i + 1 ))
+done
+Keep asking for a password until the user enters "admin123":
+
+bash
+#!/bin/bash
+password=""
+until [ "$password" == "admin123" ]
+do
+  read -sp "Enter password: " password
+  echo
+done
+echo "Access granted!"
+Continue running an until loop until a file named done.txt exists (create the file first):
+
+bash
+#!/bin/bash
+touch done.txt
+until [ -f done.txt ]
+do
+  echo "Waiting for done.txt to exist..."
+  sleep 1
+done
+echo "File done.txt found!"
+Difference between While and Until Loops
+while loop runs as long as a condition is true.
+
+until loop runs as long as a condition is false, and stops when the condition becomes true.
+
+Example:
+
+bash
+#!/bin/bash
+# while loop example
+count=1
+while [ $count -le 3 ]; do
+  echo "while loop count: $count"
+  ((count++))
+done
+
+# until loop example
+count=1
+until [ $count -gt 3 ]; do
+  echo "until loop count: $count"
+  ((count++))
+done
+
+
